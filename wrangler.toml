@@ -1,0 +1,9 @@
+name = "cumbre-innovemosjuntos"
+compatibility_date = "2025-05-01"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
+
+# Secretos: configurar desde dashboard de Cloudflare Pages
+# (Settings → Environment variables) o con:
+#   npx wrangler pages secret put SESSION_SECRET --project-name cumbre-innovemosjuntos
+#   npx wrangler pages secret put FIREBASE_SERVICE_ACCOUNT --project-name cumbre-innovemosjuntos

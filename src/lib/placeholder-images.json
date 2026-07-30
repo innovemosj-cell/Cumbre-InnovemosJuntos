@@ -1,0 +1,46 @@
+{
+  "placeholderImages": [
+    {
+      "id": "idea-img-1",
+      "description": "A person sketching ideas on a whiteboard.",
+      "imageUrl": "https://picsum.photos/seed/idea1/600/400",
+      "imageHint": "innovation sketch"
+    },
+    {
+      "id": "idea-img-2",
+      "description": "A team collaborating around a laptop.",
+      "imageUrl": "https://picsum.photos/seed/idea2/600/400",
+      "imageHint": "team collaboration"
+    },
+    {
+      "id": "idea-img-3",
+      "description": "A lightbulb glowing with gears inside.",
+      "imageUrl": "https://picsum.photos/seed/idea3/600/400",
+      "imageHint": "creative concept"
+    },
+    {
+      "id": "idea-img-4",
+      "description": "A rocket launching into the sky.",
+      "imageUrl": "https://picsum.photos/seed/idea4/600/400",
+      "imageHint": "business growth"
+    },
+    {
+      "id": "idea-img-5",
+      "description": "A person presenting a chart to an audience.",
+      "imageUrl": "https://picsum.photos/seed/idea5/600/400",
+      "imageHint": "impact presentation"
+    },
+    {
+      "id": "user-avatar-1",
+      "description": "Avatar for a user.",
+      "imageUrl": "https://picsum.photos/seed/user1/40/40",
+      "imageHint": "person avatar"
+    },
+    {
+      "id": "user-avatar-2",
+      "description": "Avatar for another user.",
+      "imageUrl": "https://picsum.photos/seed/user2/40/40",
+      "imageHint": "person avatar"
+    }
+  ]
+}

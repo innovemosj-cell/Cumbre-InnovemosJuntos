@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Instructivo para Jurados — Plataforma de Calificación</title>
+<style>
+  /* ---------- Tipografía y base ---------- */
+  :root {
+    --primary: #1f6feb;
+    --primary-dark: #144a99;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --bg-soft: #f9fafb;
+    --warn: #b45309;
+    --warn-bg: #fffbeb;
+    --ok: #047857;
+    --ok-bg: #ecfdf5;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #111827;
+    margin: 0;
+    padding: 0;
+    line-height: 1.4;
+    font-size: 10pt;
+  }
+  .page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 18px 32px;
+  }
+
+  /* ---------- Cabecera (antes portada) ---------- */
+  .doc-header {
+    text-align: left;
+    padding: 8px 0 14px;
+    border-bottom: 3px solid var(--primary);
+    margin-bottom: 16px;
+  }
+  .doc-header h1 {
+    font-size: 20pt;
+    margin: 0 0 2px;
+    color: var(--primary-dark);
+    letter-spacing: -0.3px;
+  }
+  .doc-header .subtitle {
+    font-size: 11pt;
+    color: var(--muted);
+    margin: 0;
+  }
+  .doc-header .meta {
+    font-size: 9pt;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* ---------- Encabezados ---------- */
+  h2 {
+    color: var(--primary-dark);
+    font-size: 13pt;
+    margin: 0 0 4px;
+    padding-bottom: 4px;
+    border-bottom: 1.5px solid var(--primary);
+  }
+  h2 .num {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 10pt;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  h3 {
+    color: #111827;
+    font-size: 11pt;
+    margin: 12px 0 4px;
+  }
+  section.step {
+    margin: 14px 0;
+  }
+  section.step .lead {
+    color: var(--muted);
+    margin: 2px 0 8px;
+    font-size: 10pt;
+  }
+
+  /* ---------- Bloques ---------- */
+  ol, ul { padding-left: 20px; margin: 4px 0 8px; }
+  ol li, ul li { margin-bottom: 2px; }
+  p { margin: 4px 0 6px; }
+
+  .screenshot {
+    margin: 8px 0 10px;
+    text-align: center;
+    page-break-inside: avoid;
+  }
+  .screenshot .caption {
+    margin-top: 4px;
+    font-size: 9pt;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .screenshot img {
+    width: 100%;
+    max-height: 520px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    display: block;
+    margin: 0 auto;
+  }
+
+  .callout {
+    border-left: 3px solid var(--primary);
+    background: #eff6ff;
+    padding: 6px 10px;
+    margin: 8px 0;
+    border-radius: 3px;
+    font-size: 9.5pt;
+  }
+  .callout.warn {
+    border-left-color: var(--warn);
+    background: var(--warn-bg);
+  }
+  .callout.ok {
+    border-left-color: var(--ok);
+    background: var(--ok-bg);
+  }
+  .callout strong { display: block; margin-bottom: 2px; }
+
+  .kbd {
+    display: inline-block;
+    background: #f3f4f6;
+    border: 1px solid #d1d5db;
+    border-radius: 3px;
+    padding: 0 5px;
+    font-family: ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+    font-size: 9pt;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 999px;
+    font-size: 8.5pt;
+    font-weight: 600;
+    background: #e0e7ff;
+    color: #3730a3;
+  }
+  .badge.green { background: #d1fae5; color: #065f46; }
+
+  table.frentes {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 6px 0 10px;
+    font-size: 9.5pt;
+  }
+  table.frentes th, table.frentes td {
+    border: 1px solid var(--border);
+    padding: 4px 8px;
+    text-align: left;
+  }
+  table.frentes th {
+    background: var(--bg-soft);
+    font-weight: 600;
+  }
+
+  /* ---------- TOC compacto en 2 columnas ---------- */
+  .toc {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin-bottom: 14px;
+  }
+  .toc-title {
+    font-size: 9.5pt;
+    font-weight: 600;
+    color: var(--primary-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .toc ol {
+    margin: 0;
+    padding-left: 18px;
+    column-count: 2;
+    column-gap: 24px;
+    font-size: 9.5pt;
+  }
+  .toc ol li { margin-bottom: 1px; }
+
+  /* ---------- Print ---------- */
+  @page {
+    size: A4;
+    margin: 12mm 13mm;
+  }
+  @media print {
+    body { font-size: 9.5pt; }
+    .page { padding: 0; max-width: 100%; }
+    h2 { page-break-after: avoid; }
+    .screenshot { page-break-inside: avoid; }
+    .no-print { display: none !important; }
+    .screenshot img { width: 100% !important; max-height: 500px !important; }
+  }
+
+  /* ---------- Toolbar (no se imprime) ---------- */
+  .print-bar {
+    position: sticky;
+    top: 0;
+    background: #111827;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    z-index: 100;
+    font-size: 10pt;
+  }
+  .print-bar button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 10pt;
+  }
+</style>
+</head>
+<body>
+
+<div class="print-bar no-print">
+  Clic para generar el PDF
+  <button onclick="window.print()">Imprimir / Guardar como PDF</button>
+</div>
+
+<div class="page">
+
+  <!-- ============== CABECERA ============== -->
+  <header class="doc-header">
+    <h1>Instructivo para Jurados</h1>
+    <p class="subtitle">Plataforma de Calificación de Iniciativas</p>
+    <div class="meta">Versión 1.0 — Junio 2026</div>
+  </header>
+
+  <!-- ============== ÍNDICE ============== -->
+  <div class="toc">
+    <div class="toc-title">Contenido</div>
+    <ol>
+      <li>Bienvenida y resumen del proceso</li>
+      <li>Ingreso a la plataforma</li>
+      <li>Visualización de iniciativas</li>
+      <li>Detalle de una iniciativa</li>
+      <li>Cómo calificar una iniciativa</li>
+      <li>Ver y editar tus calificaciones</li>
+      <li>Preguntas frecuentes</li>
+    </ol>
+  </div>
+
+  <!-- ============== 1. BIENVENIDA ============== -->
+  <section class="step">
+    <h2><span class="num">1</span>Bienvenida</h2>
+    <p>
+      Gracias por ser parte del comité de jurados. Como jurado, tu rol es
+      <strong>evaluar las iniciativas que te fueron asignadas</strong> a través
+      de criterios objetivos agrupados por frentes (Estrategia, Impacto,
+      Innovación, Técnico).
+    </p>
+
+    <h3>Resumen del proceso</h3>
+    <ol>
+      <li>Ingresas a la plataforma con tu <strong>código de acceso de 4 dígitos</strong>.</li>
+      <li>Ves las iniciativas asignadas en el <strong>dashboard</strong>.</li>
+      <li>Abres una iniciativa, lees su descripción (o la <em>escuchas</em> en audio).</li>
+      <li>La <strong>calificas</strong> por cada criterio del/los frente(s) que te corresponden.</li>
+      <li>Tus calificaciones quedan guardadas y puedes <strong>editarlas</strong> hasta el cierre.</li>
+    </ol>
+
+    <div class="callout">
+      <strong>¿Qué son los "frentes"?</strong>
+      Son las dimensiones de evaluación. Cada jurado tiene asignados uno o
+      varios frentes según su área de expertise. Solo verás y podrás calificar
+      los criterios de tus frentes asignados.
+    </div>
+  </section>
+
+  <!-- ============== 2. INGRESO ============== -->
+  <section class="step">
+    <h2><span class="num">2</span>Ingreso a la plataforma</h2>
+    <p class="lead">Para acceder solo necesitas tu código de 4 dígitos.</p>
+
+    <h3>Paso a paso</h3>
+    <ol>
+      <li>Abre la URL de la plataforma en tu navegador (Chrome, Edge o Firefox recomendado).</li>
+      <li>Verás la pantalla de inicio de sesión.</li>
+      <li>Escribe tu <strong>código de acceso de 4 dígitos</strong> en el campo.</li>
+      <li>Presiona <span class="kbd">Ingresar</span>.</li>
+    </ol>
+
+    <div class="screenshot">
+      <img src="img/login.png" alt="Pantalla de inicio de sesión" />
+      <div class="caption">Figura 2.1 — Pantalla de login con campo de código de 4 dígitos.</div>
+    </div>
+
+    <div class="callout">
+      <strong>¿No tienes código?</strong>
+      Solicítalo al organizador del evento. Cada jurado recibe un código
+      único por correo electrónico antes del inicio de la jornada.
+    </div>
+  </section>
+
+  <!-- ============== 3. VISUALIZACIÓN ============== -->
+  <section class="step">
+    <h2><span class="num">3</span>Visualización de iniciativas</h2>
+    <p class="lead">Después del login llegas al <strong>Dashboard</strong>: tu vista principal.</p>
+
+    <h3>Qué ves en el dashboard</h3>
+    <ul>
+      <li>Título <strong>"Ideas a Calificar"</strong> y una breve indicación.</li>
+      <li>Cada iniciativa aparece como una <strong>tarjeta</strong> con: nombre, grupo/área, postulante y código (#).</li>
+      <li>Las iniciativas que <strong>ya calificaste</strong> aparecen marcadas.</li>
+    </ul>
+
+    <div class="screenshot">
+      <img src="img/dashboard-jurado.png" alt="Dashboard del jurado" />
+      <div class="caption">Figura 3.1 — Dashboard del jurado mostrando iniciativas activas a calificar.</div>
+    </div>
+
+    <h3>Navegación principal</h3>
+    <p>En la barra superior tienes acceso a:</p>
+    <ul>
+      <li><strong>Dashboard / Inicio</strong> — vuelve al listado de iniciativas.</li>
+      <li><strong>Mis Calificaciones</strong> — ver y editar lo que ya calificaste.</li>
+      <li><strong>Perfil (esquina superior derecha)</strong> — tu nombre, tu rol en la organización, tu rol en la plataforma, y la opción de <strong>Cerrar sesión</strong>.</li>
+    </ul>
+
+    <div class="screenshot">
+      <img src="img/user-menu.png" alt="Menú de usuario" />
+      <div class="caption">Figura 3.2 — Menú de usuario con datos de perfil y opción de cerrar sesión.</div>
+    </div>
+  </section>
+
+  <!-- ============== 4. DETALLE ============== -->
+  <section class="step">
+    <h2><span class="num">4</span>Detalle de una iniciativa</h2>
+    <p class="lead">Haz clic en la tarjeta de una iniciativa para ver su detalle completo.</p>
+
+    <h3>Qué encontrarás</h3>
+    <ul>
+      <li><strong>Nombre de la solución</strong> y código (#).</li>
+      <li><strong>Postulante, grupo y área.</strong></li>
+      <li><strong>Problema</strong> que resuelve.</li>
+      <li><strong>Hipótesis de IA</strong> (cómo aplica IA en la solución).</li>
+      <li><strong>Indicadores de valor</strong> esperados.</li>
+      <li><strong>Reproductor de audio</strong> — escucha un resumen de la iniciativa generado automáticamente. Útil si prefieres oír mientras revisas otras cosas.</li>
+      <li><strong>Formulario de calificación</strong> al final de la página.</li>
+    </ul>
+
+    <div class="screenshot">
+      <img src="img/detalle-iniciativa.png" alt="Detalle de la iniciativa" />
+      <div class="caption">Figura 4.1 — Vista de detalle de la iniciativa con descripción y audio podcast.</div>
+    </div>
+
+    <div class="callout ok">
+      <strong>Tip: usa el audio</strong>
+      El reproductor te permite cambiar la velocidad (0.75×, 1×, 1.25×, 1.5×).
+      Ideal para revisar varias iniciativas rápido.
+    </div>
+  </section>
+
+  <!-- ============== 5. CALIFICAR ============== -->
+  <section class="step">
+    <h2><span class="num">5</span>Cómo calificar una iniciativa</h2>
+    <p class="lead">El formulario de calificación está en la parte inferior del detalle.</p>
+
+    <h3>Estructura del formulario</h3>
+    <p>Solo verás los criterios de los <strong>frentes que te fueron asignados</strong>. Los pesos por defecto son:</p>
+    <table class="frentes">
+      <thead>
+        <tr><th>Frente</th><th>Peso por defecto</th><th>Ejemplo de criterio</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Estrategia</td><td>25%</td><td>Alineación con objetivos del negocio</td></tr>
+        <tr><td>Impacto</td><td>25%</td><td>Magnitud del beneficio esperado</td></tr>
+        <tr><td>Innovación</td><td>20%</td><td>Originalidad de la solución</td></tr>
+        <tr><td>Técnico</td><td>30%</td><td>Viabilidad de implementación</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Paso a paso</h3>
+    <ol>
+      <li>Por cada criterio, selecciona el <strong>nivel</strong> que mejor describe la iniciativa (1 a 5, donde 5 es el mejor).</li>
+      <li>Lee la <strong>descripción de cada nivel</strong> para elegir con criterio. No selecciones a la ligera.</li>
+      <li>Opcionalmente escribe <strong>observaciones</strong> (máximo 500 caracteres) — útiles para el organizador.</li>
+      <li>Haz clic en <span class="kbd">Enviar calificación</span>.</li>
+      <li>Vuelves al dashboard. La iniciativa quedará marcada como <span class="badge green">Calificada</span>.</li>
+    </ol>
+
+    <div class="screenshot">
+      <img src="img/formulario-calificacion.png" alt="Formulario de calificación" />
+      <div class="caption">Figura 5.1 — Formulario de calificación con criterios y niveles.</div>
+    </div>
+
+    <div class="callout warn">
+      <strong>Antes de enviar</strong>
+      Asegúrate de haber calificado <em>todos</em> los criterios de tus frentes
+      asignados. Si dejas alguno sin seleccionar, no podrás enviar.
+    </div>
+
+    <div class="callout">
+      <strong>¿Cómo se calculan los puntajes?</strong>
+      Cada nivel tiene un valor (1–5). El sistema multiplica tu puntaje por
+      el <strong>peso del criterio</strong> y por el peso del <strong>frente</strong>.
+      Eso genera un puntaje ponderado que el organizador usa para el ranking final.
+    </div>
+  </section>
+
+  <!-- ============== 6. EDITAR / VER ============== -->
+  <section class="step">
+    <h2><span class="num">6</span>Ver y editar tus calificaciones</h2>
+    <p class="lead">Puedes revisar y modificar lo que calificaste hasta el cierre del proceso.</p>
+
+    <h3>Cómo llegar</h3>
+    <ol>
+      <li>En la barra superior, haz clic en <strong>"Mis Calificaciones"</strong>.</li>
+      <li>Verás una tabla con todas las iniciativas que has evaluado, ordenadas por puntaje bruto.</li>
+    </ol>
+
+    <div class="screenshot">
+      <img src="img/mis-calificaciones.png" alt="Mis calificaciones" />
+      <div class="caption">Figura 6.1 — Tabla "Mis Calificaciones" con resumen por iniciativa.</div>
+    </div>
+
+    <h3>Editar una calificación</h3>
+    <ol>
+      <li>En la tabla, haz clic en el botón de <strong>lápiz (editar)</strong> de la fila que quieres editar.</li>
+      <li>Volverás al detalle de la iniciativa con tus respuestas <strong>precargadas</strong>.</li>
+      <li>Modifica lo que necesites.</li>
+      <li>Vuelve a hacer clic en <span class="kbd">Enviar calificación</span> para guardar.</li>
+    </ol>
+
+    <div class="callout">
+      <strong>¿Hasta cuándo puedo editar?</strong>
+      Hasta que el organizador <strong>cierre la jornada de calificación</strong>.
+      Después de eso, las respuestas quedan congeladas para el cálculo final.
+    </div>
+
+    <div class="screenshot">
+      <img src="img/editar-calificacion.png" alt="Editar calificación" />
+      <div class="caption">Figura 6.2 — Formulario de edición con respuestas anteriores precargadas.</div>
+    </div>
+  </section>
+
+  <!-- ============== 7. FAQ ============== -->
+  <section class="step">
+    <h2><span class="num">7</span>Preguntas frecuentes</h2>
+
+    <p><strong>¿Qué hago si olvidé mi código?</strong><br />
+    Contacta al organizador para que te lo reenvíe o regenere uno nuevo.</p>
+
+    <p><strong>¿Por qué no veo todos los criterios?</strong><br />
+    Solo ves los criterios de los frentes que te fueron asignados. Si crees
+    que falta alguno, verifica con el organizador.</p>
+
+    <p><strong>¿La sesión expira?</strong><br />
+    Sí, cada sesión dura <strong>24 horas</strong>. Después de ese tiempo
+    deberás iniciar sesión de nuevo con tu código.</p>
+
+    <p><strong>¿Puedo calificar desde el celular?</strong><br />
+    Sí. La plataforma es responsive y funciona en cualquier dispositivo
+    moderno (recomendamos Chrome o Safari).</p>
+
+    <p><strong>¿Qué hago si el audio no carga?</strong><br />
+    Es posible que el organizador todavía no lo haya generado para esa
+    iniciativa. Puedes leer la descripción escrita normalmente.</p>
+  </section>
+
+</div>
+
+</body>
+</html>

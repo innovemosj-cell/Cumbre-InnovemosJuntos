@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Guía — Evaluación Final</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #1e293b;
+    font-size: 11px;
+    line-height: 1.42;
+  }
+  .page { padding: 26px 40px; }
+  header {
+    display: flex; align-items: baseline; justify-content: space-between;
+    border-bottom: 3px solid #e11d73; padding-bottom: 8px; margin-bottom: 12px;
+  }
+  h1 { font-size: 20px; color: #0f172a; }
+  .brand { font-size: 11.5px; color: #e11d73; font-weight: 700; }
+  h2 {
+    font-size: 13px; color: #e11d73; margin: 12px 0 5px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: #e11d73; color: #fff; font-size: 11px; font-weight: 700;
+  }
+  p { margin-bottom: 5px; }
+  ul { margin: 4px 0 6px 18px; }
+  li { margin-bottom: 3px; }
+  .card {
+    background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+    padding: 10px 14px; margin: 6px 0;
+  }
+  .stars { color: #f59e0b; letter-spacing: 1px; }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+  th, td { border: 1px solid #e2e8f0; padding: 4px 8px; text-align: left; vertical-align: top; }
+  th { background: #fdf2f8; color: #9d174d; font-size: 11px; }
+  td.peso { text-align: center; font-weight: 700; color: #e11d73; white-space: nowrap; }
+  .formula {
+    background: #fdf2f8; border-left: 4px solid #e11d73; border-radius: 4px;
+    padding: 8px 12px; margin: 6px 0; font-size: 11px;
+  }
+  .tip { background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 8px 12px; margin-top: 6px; }
+  .muted { color: #64748b; font-size: 10.5px; }
+  footer { margin-top: 10px; padding-top: 6px; border-top: 1px solid #e2e8f0; color: #94a3b8; font-size: 9.5px; }
+  .pagebreak { page-break-before: always; }
+  .gallery { display: flex; gap: 14px; margin-top: 10px; }
+  .shot { flex: 1; text-align: center; }
+  .shot img {
+    width: 100%; border: 1px solid #e2e8f0; border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.12);
+  }
+  .shot p { margin-top: 6px; font-size: 10px; color: #475569; line-height: 1.35; }
+  .shot p strong { color: #e11d73; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>Guía de la Evaluación Final</h1>
+    <span class="brand">CalificApp · Hackathon de IA Comfama</span>
+  </header>
+
+  <p>Como jurado de la final, tu tarea es calificar las <strong>10 iniciativas finalistas</strong> respondiendo
+  <strong>5 preguntas con estrellas de 1 a 5</strong>. Con esos puntajes se eligen las 3 iniciativas ganadoras.
+  Esta guía te explica cómo entrar, qué vas a ver y cómo se calcula el resultado.</p>
+
+  <h2><span class="num">1</span> Cómo ingresar</h2>
+  <div class="card">
+    <p>Abre <strong>https://clasificacion-hackathon.pages.dev</strong> desde tu celular o computador
+    y escribe tu <strong>código de acceso de 4 dígitos</strong> (te lo entrega la organización). No necesitas usuario ni contraseña.</p>
+  </div>
+
+  <h2><span class="num">2</span> Cómo verás a los equipos</h2>
+  <ul>
+    <li>Al entrar verás las <strong>10 iniciativas finalistas numeradas</strong> (Iniciativa 1, 2, 3…), cada una con la foto de su equipo, el nombre de la solución y su área.</li>
+    <li>Las tarjetas marcan tu avance: <strong>Pendiente</strong> (naranja) o <strong>Evaluada</strong> (verde), para que no se te quede ninguna sin calificar.</li>
+    <li>Toca una iniciativa para abrirla: encontrarás el <strong>impacto en eficiencia</strong> que declara el equipo y las secciones <strong>Problema, Hipótesis de IA e Indicadores de valor</strong>. Cada sección se expande con un toque si quieres leer el detalle completo.</li>
+  </ul>
+
+  <h2><span class="num">3</span> Cómo calificar</h2>
+  <ul>
+    <li>Debajo de la información del equipo está el formulario con las <strong>5 preguntas</strong>. En cada una eliges de <strong>1 a 5 estrellas</strong>.</li>
+    <li>Al tocar o pasar por una estrella, aparece un texto que explica <strong>qué significa dar ese puntaje</strong> en esa pregunta — úsalo como referencia para ser consistente entre equipos.</li>
+    <li>Puedes dejar <strong>observaciones</strong> opcionales (máximo 300 caracteres).</li>
+    <li>Al final tocas <strong>Revisar y Enviar</strong> y confirmas. Si luego cambias de opinión, puedes <strong>volver a entrar y actualizar tu calificación</strong>: siempre cuenta la última.</li>
+  </ul>
+
+  <h2><span class="num">4</span> Las 5 preguntas y su peso</h2>
+  <p>No todas las preguntas valen lo mismo: cada una tiene un <strong>peso</strong> en el resultado final.</p>
+  <table>
+    <tr><th style="width:26%">Pregunta</th><th>Qué evalúa</th><th style="width:9%">Peso</th></tr>
+    <tr>
+      <td><strong>Originalidad e Innovación</strong></td>
+      <td>¿La iniciativa propone una idea creativa, una mejora significativa o una nueva forma de hacer las cosas para resolver el desafío?</td>
+      <td class="peso">25%</td>
+    </tr>
+    <tr>
+      <td><strong>Escalabilidad y soporte</strong></td>
+      <td>¿Qué tan fácil sería llevar esta solución a más personas, áreas o territorios, y darle el soporte necesario para que siga funcionando?</td>
+      <td class="peso">20%</td>
+    </tr>
+    <tr>
+      <td><strong>IA para la productividad</strong></td>
+      <td>¿La iniciativa usa la inteligencia artificial para mejorar la productividad: ahorrar tiempo, reducir tareas repetitivas, optimizar recursos o mejorar la calidad del trabajo?</td>
+      <td class="peso">25%</td>
+    </tr>
+    <tr>
+      <td><strong>Demostración técnica</strong></td>
+      <td>¿Qué tan funcional fue la demostración técnica presentada por el equipo? (De ★1 «sin prototipo funcional» a ★5 «totalmente funcional, en vivo».)</td>
+      <td class="peso">20%</td>
+    </tr>
+    <tr>
+      <td><strong>Claridad de la comunicación</strong></td>
+      <td>¿El equipo comunicó su idea con claridad: se entendió el problema, la solución y el valor que aporta?</td>
+      <td class="peso">10%</td>
+    </tr>
+  </table>
+
+  <h2><span class="num">5</span> Cómo se calcula el resultado</h2>
+  <div class="formula">
+    <strong>Puntaje de un jurado</strong> = (★ Originalidad × 25%) + (★ Escalabilidad × 20%) + (★ IA productividad × 25%) + (★ Demo técnica × 20%) + (★ Claridad × 10%)
+  </div>
+  <ul>
+    <li>El resultado queda en <strong>escala de 1 a 5</strong> y se <strong>promedia entre todos los jurados</strong> que calificaron la iniciativa.</li>
+    <li>Ganan las <strong>3 iniciativas con mayor puntaje ponderado</strong>. En caso de empate, desempata la suma total de estrellas.</li>
+  </ul>
+  <div class="pagebreak"></div>
+  <h2><span class="num">6</span> Así se ve la aplicación</h2>
+  <div class="gallery">
+    <div class="shot">
+      <img src="../docs/img/01-login.png" alt="Pantalla de ingreso" />
+      <p><strong>1.</strong> Ingresa con tu código de 4 dígitos.</p>
+    </div>
+    <div class="shot">
+      <img src="../docs/img/02-iniciativas.png" alt="Listado de iniciativas" />
+      <p><strong>2.</strong> Las finalistas numeradas, con su estado Pendiente o Evaluada.</p>
+    </div>
+    <div class="shot">
+      <img src="../docs/img/03-estrellas.png" alt="Formulario de estrellas" />
+      <p><strong>3.</strong> Cada pregunta muestra su peso y se responde con estrellas.</p>
+    </div>
+    <div class="shot">
+      <img src="../docs/img/04-confirmar.png" alt="Confirmar calificación" />
+      <p><strong>4.</strong> Revisa el resumen y confirma. Podrás modificarla más tarde.</p>
+    </div>
+  </div>
+
+  <footer>Hackathon de IA Comfama · Evaluación Final · CalificApp</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,96 @@
+EVALUACIÓN FINAL — HACKATHON DE IA COMFAMA
+Preguntas, categorías y significado de cada estrella (escala 1 a 5)
+======================================================================
+
+1. CATEGORÍA: Originalidad e Innovación (peso: 25%)
+
+   Pregunta: ¿La iniciativa propone una idea creativa, una mejora significativa o una nueva forma de hacer las cosas para resolver el desafío?
+
+   Significado de las estrellas:
+   ★☆☆☆☆ (1) Sin novedad
+      Replica algo que ya existe, sin ningún elemento diferenciador ni creatividad en la propuesta.
+   ★★☆☆☆ (2) Novedad leve
+      Introduce pequeños ajustes sobre soluciones conocidas; el cambio propuesto es marginal.
+   ★★★☆☆ (3) Mejora significativa
+      Combina o adapta soluciones existentes con ingenio y logra una mejora clara frente a lo actual.
+   ★★★★☆ (4) Muy innovadora
+      Propone una solución poco habitual y creativa; introduce un cambio relevante en la forma de resolver el desafío.
+   ★★★★★ (5) Disruptiva
+      Plantea una nueva forma de hacer las cosas, con uso ingenioso de los recursos y un diferencial evidente.
+
+----------------------------------------------------------------------
+
+2. CATEGORÍA: Escalabilidad y soporte (peso: 20%)
+
+   Pregunta: ¿Qué tan fácil sería llevar esta solución a más personas, áreas o territorios? Piense en si está diseñada para crecer o si solo funciona en su contexto actual.
+
+   Significado de las estrellas:
+   ★☆☆☆☆ (1) Solo funciona aquí
+      Sirve únicamente para el caso puntual que muestra; llevarla a otro lado exigiría rehacerla.
+   ★★☆☆☆ (2) Difícil de escalar
+      Podría crecer, pero con mucho esfuerzo, costo o dependencias que la hacen difícil de soportar.
+   ★★★☆☆ (3) Escalable con ajustes
+      Con cambios razonables podría usarse en otras áreas o públicos, con un soporte manejable.
+   ★★★★☆ (4) Fácil de escalar
+      Está pensada para crecer: llevarla a más áreas o personas sería sencillo y su soporte, simple.
+   ★★★★★ (5) Escala transformadora
+      Puede crecer en la organización y en la sociedad con un soporte sencillo, sin depender de su contexto actual.
+
+----------------------------------------------------------------------
+
+3. CATEGORÍA: IA para la productividad (peso: 25%)
+
+   Pregunta: ¿La iniciativa ahorra tiempo, reduce tareas repetitivas, optimiza recursos o mejora la calidad del trabajo?
+
+   Significado de las estrellas:
+   ★☆☆☆☆ (1) Sin aporte a la productividad
+      La IA no genera ahorros de tiempo ni mejoras visibles en la forma de trabajar.
+   ★★☆☆☆ (2) Aporte menor
+      Mejora tareas puntuales, con un beneficio pequeño o difícil de medir.
+   ★★★☆☆ (3) Aporte claro
+      Ahorra tiempo o recursos de forma visible en un proceso o equipo concreto.
+   ★★★★☆ (4) Alta productividad
+      Genera ahorros o mejoras importantes y medibles en varios procesos o equipos.
+   ★★★★★ (5) Transforma la productividad
+      Cambia la forma de trabajar: ahorros significativos, medibles y sostenidos gracias a la IA.
+
+----------------------------------------------------------------------
+
+4. CATEGORÍA: Demostración técnica (peso: 20%)
+
+   Pregunta: ¿La demostración permitió entender claramente cómo funciona la solución de principio a fin?
+
+   Significado de las estrellas:
+   ★☆☆☆☆ (1) Nada clara
+      No se entiende qué hace la solución ni cómo funciona; la demostración confunde más de lo que explica.
+   ★★☆☆☆ (2) Poco clara
+      Se intuye qué hace, pero el flujo es difícil de seguir y quedan dudas de cómo resuelve el problema.
+   ★★★☆☆ (3) Clara
+      Se entiende cómo funciona la solución, aunque algunas partes del flujo requieren esfuerzo o explicación adicional.
+   ★★★★☆ (4) Muy clara
+      El flujo se sigue sin esfuerzo de principio a fin; queda claro qué hace y cómo resuelve el problema.
+   ★★★★★ (5) Impecable
+      Total claridad: cualquier jurado, sin contexto técnico, entiende qué hace, cómo funciona y qué valor genera.
+
+----------------------------------------------------------------------
+
+5. CATEGORÍA: Claridad de la comunicación (peso: 10%)
+
+   Pregunta: ¿El equipo comunicó su idea con claridad: se entendió el problema, la solución y el valor que aporta?
+
+   Significado de las estrellas:
+   ★☆☆☆☆ (1) Confusa
+      No se entiende el problema ni la solución; la presentación fue desordenada.
+   ★★☆☆☆ (2) Poco clara
+      Se entiende la idea general, pero quedan vacíos sobre el problema, la solución o su valor.
+   ★★★☆☆ (3) Clara
+      Comunica bien el problema, la solución y su valor.
+   ★★★★☆ (4) Muy clara
+      Comunica muy bien la idea, con un mensaje ordenado que destaca y se recuerda.
+   ★★★★★ (5) Excepcional
+      Comunicación impecable: claridad total y un mensaje que deja huella en la audiencia.
+
+----------------------------------------------------------------------
+
+Suma de los pesos: 100%
+Fuente: colección finalCriteria de Firestore (incluye ediciones del admin).
