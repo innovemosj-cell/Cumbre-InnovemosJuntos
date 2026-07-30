@@ -8,7 +8,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/components/ui/tabs';
-import { getIdeas } from '@/lib/data';
+import { getCategories, getIdeas } from '@/lib/data';
 import { getSession } from '@/lib/session';
 import { redirect } from 'next/navigation';
 
@@ -21,7 +21,7 @@ export default async function AdminIniciativasPage() {
     redirect('/dashboard');
   }
 
-  const ideas = await getIdeas();
+  const [ideas, categories] = await Promise.all([getIdeas(), getCategories()]);
 
   return (
     <div className="container mx-auto max-w-5xl space-y-8">
@@ -42,11 +42,11 @@ export default async function AdminIniciativasPage() {
         </TabsList>
 
         <TabsContent value="listado" className="pt-4">
-          <IniciativasList ideas={ideas} />
+          <IniciativasList ideas={ideas} categories={categories} />
         </TabsContent>
 
         <TabsContent value="crear" className="pt-4">
-          <IndividualIdeaForm />
+          <IndividualIdeaForm categories={categories} />
         </TabsContent>
       </Tabs>
 

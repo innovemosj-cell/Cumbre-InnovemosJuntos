@@ -19,6 +19,7 @@ const fieldsSchema = z.object({
     .max(200),
   postulante: z.string().trim().max(200).optional().or(z.literal('')),
   codigo: z.string().trim().max(40).optional().or(z.literal('')),
+  categoryId: z.string().trim().max(60).optional().or(z.literal('')),
   group: z.string().trim().max(200).optional().or(z.literal('')),
   area: z.string().trim().max(200).optional().or(z.literal('')),
   problema: z.string().trim().max(4000).optional().or(z.literal('')),

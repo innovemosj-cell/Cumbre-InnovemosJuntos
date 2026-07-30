@@ -33,7 +33,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 import { Loader2, Save, Users, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import type { Idea } from '@/lib/types';
+import type { Category, Idea } from '@/lib/types';
 
 const editIdeaSchema = z.object({
   nombreSolucion: z
@@ -43,6 +43,7 @@ const editIdeaSchema = z.object({
     .max(200),
   postulante: z.string().trim().max(200).optional().or(z.literal('')),
   codigo: z.string().trim().max(40).optional().or(z.literal('')),
+  categoryId: z.string().trim().max(60).optional().or(z.literal('')),
   group: z.string().trim().max(200).optional().or(z.literal('')),
   area: z.string().trim().max(200).optional().or(z.literal('')),
   problema: z.string().trim().max(4000).optional().or(z.literal('')),
@@ -111,6 +112,7 @@ function pickInitial(idea: Idea): EditIdeaValues {
     nombreSolucion: idea.nombreSolucion ?? idea.name ?? '',
     postulante: idea.postulante ?? '',
     codigo: idea.codigo ?? '',
+    categoryId: idea.categoryId ?? '',
     group: idea.group ?? '',
     area: idea.area ?? '',
     problema: idea.problema ?? '',
@@ -136,9 +138,10 @@ function pickInitial(idea: Idea): EditIdeaValues {
 
 type Props = {
   idea: Idea;
+  categories: Category[];
 };
 
-export function EditIdeaForm({ idea }: Props) {
+export function EditIdeaForm({ idea, categories }: Props) {
   const { toast } = useToast();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -257,6 +260,36 @@ export function EditIdeaForm({ idea }: Props) {
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="categoryId"
+              render={({ field }) => (
+                <FormItem className="sm:col-span-2">
+                  <FormLabel>Categoría</FormLabel>
+                  <Select
+                    value={field.value || undefined}
+                    onValueChange={(v) => field.onChange(v)}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecciona la categoría en la que compite" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {categories.map((cat) => (
+                        <SelectItem key={cat.id} value={cat.id}>
+                          {cat.title}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormDescription>
+                    En la evaluación final se premia 1 ganador por categoría.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

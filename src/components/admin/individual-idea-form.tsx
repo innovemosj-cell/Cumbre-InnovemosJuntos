@@ -21,7 +21,15 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { addIndividualIdea } from '@/lib/actions';
+import type { Category } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, PlusCircle } from 'lucide-react';
 import { useTransition } from 'react';
@@ -30,6 +38,7 @@ import { useRouter } from 'next/navigation';
 const ideaFormSchema = z.object({
   nombreSolucion: z.string().min(3, 'El nombre debe tener al menos 3 caracteres.'),
   postulante: z.string().optional().or(z.literal('')),
+  categoryId: z.string().optional().or(z.literal('')),
   group: z.string().min(2, 'El grupo es obligatorio.'),
   area: z.string().min(2, 'El área es obligatoria.'),
   problema: z.string().min(20, 'El problema debe tener al menos 20 caracteres.'),
@@ -44,7 +53,7 @@ const ideaFormSchema = z.object({
 
 type IdeaFormValues = z.infer<typeof ideaFormSchema>;
 
-export function IndividualIdeaForm() {
+export function IndividualIdeaForm({ categories }: { categories: Category[] }) {
   const { toast } = useToast();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -54,6 +63,7 @@ export function IndividualIdeaForm() {
     defaultValues: {
       nombreSolucion: '',
       postulante: '',
+      categoryId: '',
       group: '',
       area: '',
       problema: '',
@@ -110,6 +120,33 @@ export function IndividualIdeaForm() {
                   <FormControl>
                     <Input placeholder="Nombre del postulante" {...field} />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="categoryId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Categoría</FormLabel>
+                  <Select
+                    value={field.value || undefined}
+                    onValueChange={(v) => field.onChange(v)}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecciona la categoría" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {categories.map((cat) => (
+                        <SelectItem key={cat.id} value={cat.id}>
+                          {cat.title}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

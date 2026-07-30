@@ -58,6 +58,16 @@ export type FinalRating = {
   updatedAt?: string;
 };
 
+// Categoría de competencia. Cada iniciativa pertenece a una categoría y la
+// evaluación final premia 1 ganador por categoría. El admin puede editar el
+// título y la descripción desde Admin → Categorías (colección categories).
+export type Category = {
+  id: string;
+  title: string;
+  description: string;
+  order: number;
+};
+
 export type Idea = {
   id: string;
   codigo: string;
@@ -86,6 +96,8 @@ export type Idea = {
   detalleEficiencia?: string;
   imageUrl: string;
   imageUrl_2: string;
+  // Categoría a la que compite (id de la colección categories).
+  categoryId?: string;
   ratings: Record<string, Rating>;
   finalRatings?: Record<string, FinalRating>;
   order?: number;

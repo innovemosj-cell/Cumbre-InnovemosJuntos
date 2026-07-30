@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import type { Idea } from '@/lib/types';
+import type { Category, Idea } from '@/lib/types';
 import {
   deleteIdeaAction,
   reorderIdeasAction,
@@ -58,9 +58,11 @@ import { CSS } from '@dnd-kit/utilities';
 
 type Props = {
   ideas: Idea[];
+  categories: Category[];
 };
 
-export function IniciativasList({ ideas: initialIdeas }: Props) {
+export function IniciativasList({ ideas: initialIdeas, categories }: Props) {
+  const categoryById = new Map(categories.map((c) => [c.id, c]));
   const [ideas, setIdeas] = useState(initialIdeas);
   const [search, setSearch] = useState('');
   const [pendingId, setPendingId] = useState<string | null>(null);
@@ -221,6 +223,11 @@ export function IniciativasList({ ideas: initialIdeas }: Props) {
                   <SortableIdeaRow
                     key={idea.id}
                     idea={idea}
+                    categoryTitle={
+                      idea.categoryId
+                        ? categoryById.get(idea.categoryId)?.title
+                        : undefined
+                    }
                     isActive={isActive}
                     rowPending={rowPending}
                     dragDisabled={dragDisabled}
@@ -254,6 +261,7 @@ export function IniciativasList({ ideas: initialIdeas }: Props) {
 
 type SortableIdeaRowProps = {
   idea: Idea;
+  categoryTitle?: string;
   isActive: boolean;
   rowPending: boolean;
   dragDisabled: boolean;
@@ -265,6 +273,7 @@ type SortableIdeaRowProps = {
 
 function SortableIdeaRow({
   idea,
+  categoryTitle,
   isActive,
   rowPending,
   dragDisabled,
@@ -323,6 +332,21 @@ function SortableIdeaRow({
             {idea.nombreSolucion || idea.name}
           </p>
           <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-muted-foreground">
+            {categoryTitle ? (
+              <Badge
+                variant="outline"
+                className="border-violet-200 bg-violet-50 text-violet-700"
+              >
+                {categoryTitle}
+              </Badge>
+            ) : (
+              <Badge
+                variant="outline"
+                className="border-amber-200 bg-amber-50 text-amber-700"
+              >
+                Sin categoría
+              </Badge>
+            )}
             {idea.postulante && <span>{idea.postulante}</span>}
             {idea.area && (
               <>

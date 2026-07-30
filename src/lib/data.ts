@@ -21,6 +21,7 @@ import {
   type BatchWrite,
 } from './firestore-rest';
 import type {
+  Category,
   Idea,
   User,
   Rating,
@@ -85,6 +86,74 @@ export async function setCriterion(criterion: Criterion): Promise<void> {
 export async function deleteCriterion(id: string): Promise<void> {
   const { deleteDoc } = await import('./firestore-rest');
   await deleteDoc(`criteria/${id}`);
+}
+
+// ---------------------------------------------------------------------------
+// Categorías de competencia. Son 4, editables (título y descripción) desde
+// Admin → Categorías. La evaluación final premia 1 ganador por categoría.
+// ---------------------------------------------------------------------------
+
+export const DEFAULT_CATEGORIES: Category[] = [
+  {
+    id: 'categoria-1',
+    title: 'Categoría 1',
+    description: 'Edita el título y la descripción de esta categoría desde Admin → Categorías.',
+    order: 1,
+  },
+  {
+    id: 'categoria-2',
+    title: 'Categoría 2',
+    description: 'Edita el título y la descripción de esta categoría desde Admin → Categorías.',
+    order: 2,
+  },
+  {
+    id: 'categoria-3',
+    title: 'Categoría 3',
+    description: 'Edita el título y la descripción de esta categoría desde Admin → Categorías.',
+    order: 3,
+  },
+  {
+    id: 'categoria-4',
+    title: 'Categoría 4',
+    description: 'Edita el título y la descripción de esta categoría desde Admin → Categorías.',
+    order: 4,
+  },
+];
+
+let bootstrappedCategories = false;
+
+async function bootstrapCategoriesIfNeeded(): Promise<void> {
+  if (bootstrappedCategories) return;
+  const existing = await listDocs<Category>('categories');
+  if (existing.length === 0) {
+    await commitBatch(
+      DEFAULT_CATEGORIES.map((c) => ({
+        type: 'set' as const,
+        path: `categories/${c.id}`,
+        data: c as unknown as Record<string, any>,
+      }))
+    );
+  }
+  bootstrappedCategories = true;
+}
+
+export const getCategories = perRequest(async (): Promise<Category[]> => {
+  noStore();
+  const stored = await listDocs<Category>('categories');
+  if (stored.length === 0) {
+    await bootstrapCategoriesIfNeeded();
+    return DEFAULT_CATEGORIES;
+  }
+  return stored.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+});
+
+export async function updateCategories(categories: Category[]): Promise<void> {
+  const writes: BatchWrite[] = categories.map((c) => ({
+    type: 'set',
+    path: `categories/${c.id}`,
+    data: c as unknown as Record<string, any>,
+  }));
+  await commitBatch(writes);
 }
 
 export const getIdeas = perRequest(async (): Promise<Idea[]> => {

@@ -1,5 +1,5 @@
 import { EditIdeaForm } from '@/components/admin/edit-idea-form';
-import { getIdeaById } from '@/lib/data';
+import { getCategories, getIdeaById } from '@/lib/data';
 import { getSession } from '@/lib/session';
 import { notFound, redirect } from 'next/navigation';
 
@@ -16,7 +16,10 @@ export default async function EditIdeaPage({
   }
 
   const { id } = await params;
-  const idea = await getIdeaById(id);
+  const [idea, categories] = await Promise.all([
+    getIdeaById(id),
+    getCategories(),
+  ]);
   if (!idea) {
     notFound();
   }
@@ -31,7 +34,7 @@ export default async function EditIdeaPage({
           {idea.nombreSolucion || idea.name}
         </p>
       </div>
-      <EditIdeaForm idea={idea} />
+      <EditIdeaForm idea={idea} categories={categories} />
     </div>
   );
 }

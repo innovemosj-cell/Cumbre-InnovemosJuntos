@@ -48,6 +48,11 @@ export const getNavItems = (user: User) => {
             roles: ['Admin'],
           },
           {
+            href: '/admin/categorias',
+            label: 'Categorías',
+            roles: ['Admin'],
+          },
+          {
             href: '/admin/criterios',
             label: 'Criterios',
             roles: ['Admin'],

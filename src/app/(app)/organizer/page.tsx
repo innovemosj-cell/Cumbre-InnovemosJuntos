@@ -6,6 +6,7 @@ import { ResultsDashboard } from '@/components/organizer/results-dashboard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   getAppMode,
+  getCategories,
   getFinalCriteria,
   getIdeasWithFinalResults,
   getIdeasWithResults,
@@ -26,10 +27,11 @@ export default async function OrganizerPage() {
   const appMode = await getAppMode();
 
   if (appMode === 'final') {
-    const [finalResults, finalCriteria, users] = await Promise.all([
+    const [finalResults, finalCriteria, users, categories] = await Promise.all([
       getIdeasWithFinalResults(),
       getFinalCriteria(),
       getUsers(),
+      getCategories(),
     ]);
     const activeJurors = users.filter(
       (u) => u.role === 'Jurado' && u.active !== false
@@ -53,6 +55,7 @@ export default async function OrganizerPage() {
           initialResults={finalResults}
           criteria={finalCriteria}
           jurors={activeJurors}
+          categories={categories}
         />
       </div>
     );

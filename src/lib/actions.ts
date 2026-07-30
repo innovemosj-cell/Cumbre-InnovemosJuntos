@@ -40,11 +40,12 @@ import {
   updateRatingWeights,
   updateAppMode,
   updateFinalCriteria,
+  updateCategories,
   getIdeaById,
   reorderIdeas,
 } from '@/lib/data';
 import type { FinalCriterion } from './final-criteria';
-import type { AppMode, RatingWeights } from './types';
+import type { AppMode, Category, RatingWeights } from './types';
 import type { Criterion } from './types';
 import { createSession, getSession } from './session';
 import { cookies } from 'next/headers';
@@ -117,6 +118,7 @@ export async function handleLoginWithCode(prevState: any, formData: FormData) {
 const ideaFormSchema = z.object({
   nombreSolucion: z.string().min(3, 'El nombre debe tener al menos 3 caracteres.'),
   postulante: z.string().optional().or(z.literal('')),
+  categoryId: z.string().trim().max(60).optional().or(z.literal('')),
   group: z.string().min(2, 'El grupo es obligatorio.'),
   area: z.string().min(2, 'El área es obligatoria.'),
   problema: z.string().min(20, 'El problema debe tener al menos 20 caracteres.'),
@@ -159,6 +161,7 @@ export async function addIndividualIdea(data: unknown) {
       name: d.nombreSolucion,
       nombreSolucion: d.nombreSolucion,
       postulante: d.postulante || '',
+      categoryId: d.categoryId || '',
       group: d.group,
       area: d.area,
       description: '',
@@ -339,6 +342,68 @@ export async function updateFinalCriteriaAction(data: unknown) {
     return {
       success: false as const,
       message: 'No se pudieron guardar los criterios. Intenta de nuevo.',
+    };
+  }
+}
+
+const categorySchema = z.object({
+  id: z.string().trim().min(1).max(60),
+  title: z
+    .string()
+    .trim()
+    .min(3, 'El título de la categoría debe tener al menos 3 caracteres.')
+    .max(120),
+  description: z
+    .string()
+    .trim()
+    .max(600, 'La descripción no puede superar 600 caracteres.')
+    .optional()
+    .or(z.literal('')),
+  order: z.coerce.number().int().min(0),
+});
+
+const categoriesSchema = z
+  .array(categorySchema)
+  .min(1, 'Debe haber al menos una categoría.')
+  .max(10, 'Máximo 10 categorías.')
+  .refine(
+    (list) => new Set(list.map((c) => c.id)).size === list.length,
+    'Hay categorías repetidas.'
+  );
+
+export async function updateCategoriesAction(data: unknown) {
+  const session = await getSession();
+  if (!session.isLoggedIn || session.user?.role !== 'Admin') {
+    return { success: false as const, message: 'No autorizado.' };
+  }
+
+  const parsed = categoriesSchema.safeParse(data);
+  if (!parsed.success) {
+    const first = parsed.error.errors[0]?.message ?? 'Los datos son inválidos.';
+    return { success: false as const, message: first };
+  }
+
+  try {
+    const categories: Category[] = parsed.data.map((c) => ({
+      id: c.id,
+      title: c.title,
+      description: c.description || '',
+      order: c.order,
+    }));
+    await updateCategories(categories);
+    safeRevalidate('/admin/categorias');
+    safeRevalidate('/admin/iniciativas');
+    safeRevalidate('/organizer');
+    safeRevalidate('/dashboard');
+    return {
+      success: true as const,
+      message: 'Categorías guardadas correctamente.',
+    };
+  } catch (error: any) {
+    console.error('updateCategories error:', { message: error?.message });
+    return {
+      success: false as const,
+      message: 'No se pudieron guardar las categorías. Intenta de nuevo.',
     };
   }
 }

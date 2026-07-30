@@ -15,7 +15,12 @@ import {
   computeFinalTotals,
   type FinalCriterion,
 } from '@/lib/final-criteria';
-import type { FinalRating, IdeaWithFinalTotals, User } from '@/lib/types';
+import type {
+  Category,
+  FinalRating,
+  IdeaWithFinalTotals,
+  User,
+} from '@/lib/types';
 
 type FreshIdea = { id: string; finalRatings: Record<string, FinalRating> };
 
@@ -23,10 +28,12 @@ export function FinalResultsLive({
   initialResults,
   criteria,
   jurors,
+  categories,
 }: {
   initialResults: IdeaWithFinalTotals[];
   criteria: FinalCriterion[];
   jurors: User[];
+  categories: Category[];
 }) {
   const [results, setResults] = useState(initialResults);
   const [updatedAt, setUpdatedAt] = useState<Date | null>(null);
@@ -87,7 +94,12 @@ export function FinalResultsLive({
             : 'Trae solo los votos nuevos de los jurados (lectura mínima).'}
         </p>
       </div>
-      <FinalResults results={results} criteria={criteria} jurors={jurors} />
+      <FinalResults
+        results={results}
+        criteria={criteria}
+        jurors={jurors}
+        categories={categories}
+      />
     </div>
   );
 }

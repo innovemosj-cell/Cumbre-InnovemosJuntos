@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import {
   Table,
   TableBody,
@@ -40,6 +40,13 @@ type UserListProps = {
 export function UserList({ users, ideaOptions = [] }: UserListProps) {
   const [localUsers, setLocalUsers] = useState(users);
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Sincroniza con los usuarios que llegan del servidor: tras crear un
+  // usuario, el router.refresh() del formulario trae la lista nueva y sin
+  // esto la tabla seguía mostrando el estado local viejo.
+  useEffect(() => {
+    setLocalUsers(users);
+  }, [users]);
   const [visibleCodes, setVisibleCodes] = useState<Record<string, boolean>>({});
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();

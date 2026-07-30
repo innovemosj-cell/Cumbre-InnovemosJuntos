@@ -1,5 +1,5 @@
 import { IdeaList } from '@/components/ideas/idea-list';
-import { getActiveIdeas, getAppMode, getIdeas } from '@/lib/data';
+import { getActiveIdeas, getAppMode, getCategories, getIdeas } from '@/lib/data';
 import { getSession } from '@/lib/session';
 
 export const runtime = 'edge';
@@ -13,9 +13,10 @@ export default async function DashboardPage() {
   }
 
   if (user.role === 'Jurado') {
-    const [appMode, ideas] = await Promise.all([
+    const [appMode, ideas, categories] = await Promise.all([
       getAppMode(),
       getActiveIdeas(),
+      getCategories(),
     ]);
     return (
       <div className="container mx-auto">
@@ -34,12 +35,13 @@ export default async function DashboardPage() {
           jurorId={user.id}
           userRole={user.role}
           appMode={appMode}
+          categories={categories}
         />
       </div>
     );
   }
 
-  const ideas = await getIdeas();
+  const [ideas, categories] = await Promise.all([getIdeas(), getCategories()]);
   const activeIdeas = ideas.filter((i) => i.active !== false);
   const inactiveIdeas = ideas.filter((i) => i.active === false);
 
@@ -66,6 +68,7 @@ export default async function DashboardPage() {
             ideas={activeIdeas}
             jurorId={user.id}
             userRole={user.role}
+            categories={categories}
           />
         ) : (
           <p className="rounded-lg border-2 border-dashed border-muted-foreground/30 py-10 text-center text-sm text-muted-foreground">
