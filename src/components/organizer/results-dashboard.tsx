@@ -11,10 +11,13 @@ import {
 } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import { ChevronDown, Trophy, MessageSquare } from 'lucide-react';
-import type { FrenteKey, IdeaWithTotals } from '@/lib/types';
+import type { Category, FrenteKey, IdeaWithTotals } from '@/lib/types';
+import { groupByCategory } from '@/lib/category-groups';
+import { CategoryGroupHeader } from '@/components/ideas/category-group-header';
 
 type ResultsDashboardProps = {
   results: IdeaWithTotals[];
+  categories: Category[];
 };
 
 const FRENTE_META: Record<
@@ -231,17 +234,19 @@ function ResultRow({
   );
 }
 
-export function ResultsDashboard({ results }: ResultsDashboardProps) {
-  const ranked = useMemo(() => {
-    return [...results].sort(
+// Por categoría se muestra el top completo desplegado hasta este número de
+// iniciativas; el resto queda en un desplegable para no alargar la página.
+const TOP_PER_CATEGORY = 5;
+
+export function ResultsDashboard({ results, categories }: ResultsDashboardProps) {
+  const groups = useMemo(() => {
+    const ranked = [...results].sort(
       (a, b) => b.totalScores.weightedTotal - a.totalScores.weightedTotal
     );
-  }, [results]);
+    return groupByCategory(ranked, categories);
+  }, [results, categories]);
 
-  const top10 = ranked.slice(0, 10);
-  const rest = ranked.slice(10);
-
-  if (ranked.length === 0) {
+  if (results.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-muted-foreground/30 py-20 text-center">
         <p className="text-lg font-semibold text-muted-foreground">
@@ -260,47 +265,61 @@ export function ResultsDashboard({ results }: ResultsDashboardProps) {
       <Card>
         <CardContent className="p-4">
           <p className="font-headline text-lg font-semibold">
-            Top 10 iniciativas
+            Ranking por categoría
           </p>
           <p className="text-sm text-muted-foreground">
-            Haz clic en cada iniciativa para ver el desglose por frente y los
+            Cada categoría muestra sus iniciativas ordenadas por puntaje. Haz
+            clic en cada iniciativa para ver el desglose por frente y los
             comentarios de los jurados.
           </p>
         </CardContent>
       </Card>
 
-      <div className="space-y-3">
-        {top10.map((idea, i) => (
-          <ResultRow key={idea.id} idea={idea} rank={i + 1} />
-        ))}
-      </div>
+      {groups.map((group) => {
+        const top = group.items.slice(0, TOP_PER_CATEGORY);
+        const rest = group.items.slice(TOP_PER_CATEGORY);
+        return (
+          <section key={group.key}>
+            <CategoryGroupHeader
+              title={group.title}
+              description={group.description}
+              count={group.items.length}
+            />
+            <div className="space-y-3">
+              {top.map((idea, i) => (
+                <ResultRow key={idea.id} idea={idea} rank={i + 1} />
+              ))}
+            </div>
 
-      {rest.length > 0 && (
-        <details className="rounded-xl border bg-muted/20 p-4">
-          <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground">
-            Ver {rest.length} iniciativa{rest.length === 1 ? '' : 's'} restante
-            {rest.length === 1 ? '' : 's'}
-          </summary>
-          <div className="mt-3 space-y-2">
-            {rest.map((idea, i) => (
-              <div
-                key={idea.id}
-                className="flex items-center gap-3 rounded-md border bg-card px-3 py-2 text-sm"
-              >
-                <Badge variant="outline" className="font-mono">
-                  #{i + 11}
-                </Badge>
-                <span className="flex-1 min-w-0 truncate font-medium">
-                  {idea.nombreSolucion || idea.name}
-                </span>
-                <span className="font-mono tabular-nums text-muted-foreground">
-                  {idea.totalScores.weightedTotal.toFixed(1)}
-                </span>
-              </div>
-            ))}
-          </div>
-        </details>
-      )}
+            {rest.length > 0 && (
+              <details className="mt-3 rounded-xl border bg-muted/20 p-4">
+                <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground">
+                  Ver {rest.length} iniciativa{rest.length === 1 ? '' : 's'}{' '}
+                  restante{rest.length === 1 ? '' : 's'} de esta categoría
+                </summary>
+                <div className="mt-3 space-y-2">
+                  {rest.map((idea, i) => (
+                    <div
+                      key={idea.id}
+                      className="flex items-center gap-3 rounded-md border bg-card px-3 py-2 text-sm"
+                    >
+                      <Badge variant="outline" className="font-mono">
+                        #{i + TOP_PER_CATEGORY + 1}
+                      </Badge>
+                      <span className="flex-1 min-w-0 truncate font-medium">
+                        {idea.nombreSolucion || idea.name}
+                      </span>
+                      <span className="font-mono tabular-nums text-muted-foreground">
+                        {idea.totalScores.weightedTotal.toFixed(1)}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </details>
+            )}
+          </section>
+        );
+      })}
     </div>
   );
 }

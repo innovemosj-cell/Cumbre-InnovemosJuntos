@@ -2,6 +2,7 @@ import { FinalResultsTable } from '@/components/juror/final-results-table';
 import { ResultsTable } from '@/components/juror/results-table';
 import {
   getAppMode,
+  getCategories,
   getCriteria,
   getFinalCriteria,
   getFinalRatedIdeasForJuror,
@@ -22,9 +23,10 @@ export default async function MyResultsPage() {
   const appMode = await getAppMode();
 
   if (appMode === 'final') {
-    const [results, finalCriteria] = await Promise.all([
+    const [results, finalCriteria, categories] = await Promise.all([
       getFinalRatedIdeasForJuror(user.id),
       getFinalCriteria(),
+      getCategories(),
     ]);
     return (
       <div className="container mx-auto space-y-8">
@@ -33,17 +35,23 @@ export default async function MyResultsPage() {
             Mis Calificaciones
           </h1>
           <p className="text-muted-foreground">
-            Aquí se muestran tus calificaciones de la evaluación final.
+            Aquí se muestran tus calificaciones de la evaluación final,
+            divididas por categoría.
           </p>
         </div>
-        <FinalResultsTable results={results} criteria={finalCriteria} />
+        <FinalResultsTable
+          results={results}
+          criteria={finalCriteria}
+          categories={categories}
+        />
       </div>
     );
   }
 
-  const [results, allCriteria] = await Promise.all([
+  const [results, allCriteria, categories] = await Promise.all([
     getRatedIdeasForJuror(user.id),
     getCriteria(),
+    getCategories(),
   ]);
   const frentes = user.frentesAEvaluar ?? [];
   const visibleCriteria = allCriteria.filter((c) => frentes.includes(c.frente));
@@ -55,10 +63,15 @@ export default async function MyResultsPage() {
           Mis Calificaciones
         </h1>
         <p className="text-muted-foreground">
-          Aquí se muestran los resultados de las iniciativas que has evaluado.
+          Aquí se muestran los resultados de las iniciativas que has evaluado,
+          divididos por categoría.
         </p>
       </div>
-      <ResultsTable results={results} criteria={visibleCriteria} />
+      <ResultsTable
+        results={results}
+        criteria={visibleCriteria}
+        categories={categories}
+      />
     </div>
   );
 }

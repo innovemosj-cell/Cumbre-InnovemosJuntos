@@ -61,7 +61,10 @@ export default async function OrganizerPage() {
     );
   }
 
-  const results = await getIdeasWithResults();
+  const [results, categories] = await Promise.all([
+    getIdeasWithResults(),
+    getCategories(),
+  ]);
 
   return (
     <div className="container mx-auto space-y-6">
@@ -85,7 +88,7 @@ export default async function OrganizerPage() {
 
         <TabsContent value="resultados" className="space-y-6 pt-4">
           <DetailedResults />
-          <ResultsDashboard results={results} />
+          <ResultsDashboard results={results} categories={categories} />
         </TabsContent>
 
         <TabsContent value="matriz" className="space-y-4 pt-4">

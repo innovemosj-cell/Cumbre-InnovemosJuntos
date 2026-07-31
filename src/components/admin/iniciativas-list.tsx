@@ -2,6 +2,8 @@
 
 import { useState, useTransition } from 'react';
 import type { Category, Idea } from '@/lib/types';
+import { groupByCategory } from '@/lib/category-groups';
+import { CategoryGroupHeader } from '@/components/ideas/category-group-header';
 import {
   deleteIdeaAction,
   reorderIdeasAction,
@@ -174,6 +176,10 @@ export function IniciativasList({ ideas: initialIdeas, categories }: Props) {
   const activeCount = ideas.filter((i) => i.active !== false).length;
   const inactiveCount = ideas.length - activeCount;
 
+  // El listado se muestra dividido por categoría (el orden de arrastre sigue
+  // siendo global: define la posición dentro de cada categoría).
+  const groups = groupByCategory(filtered, categories);
+
   return (
     <Card>
       <CardContent className="space-y-4 p-4 sm:p-5">
@@ -203,7 +209,7 @@ export function IniciativasList({ ideas: initialIdeas, categories }: Props) {
         <div className="rounded-md border border-dashed bg-muted/30 px-3 py-2 text-xs text-muted-foreground">
           {dragDisabled
             ? 'Para reordenar arrastrando, limpia el buscador.'
-            : 'Arrastra cada iniciativa por el ícono ⠿ para definir el orden en que los jurados las verán.'}
+            : 'Arrastra cada iniciativa por el ícono ⠿ para definir el orden en que los jurados la verán dentro de su categoría. Para moverla de categoría usa el lápiz (editar).'}
         </div>
 
         <DndContext
@@ -215,37 +221,48 @@ export function IniciativasList({ ideas: initialIdeas, categories }: Props) {
             items={ideas.map((i) => i.id)}
             strategy={verticalListSortingStrategy}
           >
-            <div className="space-y-2">
-              {filtered.map((idea) => {
-                const isActive = idea.active !== false;
-                const rowPending = isPending && pendingId === idea.id;
-                return (
-                  <SortableIdeaRow
-                    key={idea.id}
-                    idea={idea}
-                    categoryTitle={
-                      idea.categoryId
-                        ? categoryById.get(idea.categoryId)?.title
-                        : undefined
-                    }
-                    isActive={isActive}
-                    rowPending={rowPending}
-                    dragDisabled={dragDisabled}
-                    onToggle={(v) => handleToggle(idea, v)}
-                    onDelete={() => handleDelete(idea)}
-                    onPhotoSaved={(newUrl) =>
-                      setIdeas((prev) =>
-                        prev.map((i) =>
-                          i.id === idea.id ? { ...i, imageUrl: newUrl } : i
-                        )
-                      )
-                    }
-                    onPodcastSuccess={(audioUrl) =>
-                      handlePodcastSuccess(idea.id, audioUrl)
-                    }
+            <div className="space-y-6">
+              {groups.map((group) => (
+                <section key={group.key}>
+                  <CategoryGroupHeader
+                    title={group.title}
+                    description={group.description}
+                    count={group.items.length}
                   />
-                );
-              })}
+                  <div className="space-y-2">
+                    {group.items.map((idea) => {
+                      const isActive = idea.active !== false;
+                      const rowPending = isPending && pendingId === idea.id;
+                      return (
+                        <SortableIdeaRow
+                          key={idea.id}
+                          idea={idea}
+                          categoryTitle={
+                            idea.categoryId
+                              ? categoryById.get(idea.categoryId)?.title
+                              : undefined
+                          }
+                          isActive={isActive}
+                          rowPending={rowPending}
+                          dragDisabled={dragDisabled}
+                          onToggle={(v) => handleToggle(idea, v)}
+                          onDelete={() => handleDelete(idea)}
+                          onPhotoSaved={(newUrl) =>
+                            setIdeas((prev) =>
+                              prev.map((i) =>
+                                i.id === idea.id ? { ...i, imageUrl: newUrl } : i
+                              )
+                            )
+                          }
+                          onPodcastSuccess={(audioUrl) =>
+                            handlePodcastSuccess(idea.id, audioUrl)
+                          }
+                        />
+                      );
+                    })}
+                  </div>
+                </section>
+              ))}
               {filtered.length === 0 && (
                 <p className="rounded-lg border border-dashed py-10 text-center text-sm text-muted-foreground">
                   No hay iniciativas que coincidan con el filtro.

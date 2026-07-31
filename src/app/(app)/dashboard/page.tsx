@@ -90,6 +90,7 @@ export default async function DashboardPage() {
               ideas={inactiveIdeas}
               jurorId={user.id}
               userRole={user.role}
+              categories={categories}
             />
           </div>
         ) : (
